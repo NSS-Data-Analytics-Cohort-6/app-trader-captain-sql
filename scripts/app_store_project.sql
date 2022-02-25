@@ -13,8 +13,10 @@
 --  After cleanup, figure out SQL query to join these two tables (name column would be most appropriate)
 --  Filter apps out over $1
 --  Look into some SELECT queries for 3a
-
-	 
+  
+ 
+  
+  
  
 --Play Store Test Queries
   --NAME COLUMN
@@ -398,5 +400,10 @@ FROM play_store_rating as p
 INNER JOIN app_store_rating as a
 ON a.name = p.name; */
 
-
-
+--QUERY TO CLEAN PLAT STORE APPS DATASET
+SELECT name, CAST(price AS money), review_count, COALESCE(rating, 0), genres, category
+FROM play_store_apps;
+  
+  
+SELECT name, CAST(price AS money), review_count, COALESCE(rating, 0), genres, REPLACE(category, '_', ' ') AS category
+FROM play_store_apps;
