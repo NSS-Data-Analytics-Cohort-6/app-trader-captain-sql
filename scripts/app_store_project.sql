@@ -493,6 +493,114 @@ FROM play_store_apps;
 		primary_genre AS genre
 		FROM app_store_apps;
 	 
-	
+	 SELECT * FROM play_store_apps;
+	 SELECT * FROM app_store_apps;
+	 
+
+
+--Query for comparing rating and review count (only $1 or less apps):	 
+SELECT DISTINCT p.name,
+CAST(a.review_count AS int) AS a_review_count,
+p.review_count AS p_review_count,
+a.rating AS a_rating,
+p.rating AS p_rating,
+SUM(CAST(a.review_count AS int) + p.review_count) AS total_review_counts
+FROM play_store_apps AS p
+INNER JOIN app_store_apps AS a
+ON a.name = p.name
+WHERE a.price <= 1 AND a.rating >= 4.5 AND p.rating >= 4.5
+GROUP BY a.review_count, p.review_count, a.rating, p.rating, p.name
+ORDER BY total_review_counts DESC
+LIMIT 50;
+
+
+SELECT DISTINCT TRIM(a.name),
+CAST(a.review_count AS int) AS a_review_count,
+MAX(p.review_count) AS p_review_count,
+a.rating AS a_rating,
+p.rating AS p_rating,
+SUM(CAST(a.review_count AS int) + p.review_count) AS total_review_counts
+FROM app_store_apps AS a
+INNER JOIN play_store_apps AS p
+ON a.name = p.name
+WHERE a.price <= 1 AND a.rating >= 4.5 AND p.rating >= 4.5
+GROUP BY a.review_count, a.rating, p.rating, a.name
+ORDER BY total_review_counts DESC
+LIMIT 50;
+	 
+SELECT DISTINCT TRIM(a.name),
+CAST(a.review_count AS int) AS a_review_count,
+MAX(p.review_count) AS p_review_count,
+a.rating AS a_rating,
+p.rating AS p_rating,
+SUM(CAST(a.review_count AS int) + p.review_count) AS total_review_counts,
+p.genres,
+a.primary_genre,
+INITCAP(REPLACE(p.category, '_', ' ')) AS category
+FROM app_store_apps AS a
+INNER JOIN play_store_apps AS p
+ON a.name = p.name
+WHERE a.price <= 1 AND a.rating >= 4.5 AND p.rating >= 4.5
+GROUP BY a.review_count, a.rating, p.rating, a.name,  a.primary_genre, p.genres, p.category
+ORDER BY total_review_counts DESC;
+
+
+
+SELECT DISTINCT TRIM(a.name),
+CAST(a.review_count AS int) AS a_review_count,
+MAX(p.review_count) AS p_review_count,
+a.rating AS a_rating,
+p.rating AS p_rating,
+SUM(CAST(a.review_count AS int) + p.review_count) AS total_review_counts,
+p.genres,
+a.primary_genre
+FROM app_store_apps AS a
+INNER JOIN play_store_apps AS p
+ON a.name = p.name
+WHERE a.price <= 1 AND a.rating >= 4.5 AND p.rating >= 4.5
+GROUP BY a.review_count, a.rating, p.rating, a.name,  a.primary_genre, p.genres
+ORDER BY total_review_counts DESC;
+
+SELECT DISTINCT a.name,
+CAST(a.review_count AS int) AS a_review_count,
+MAX(p.review_count) AS p_review_count,
+a.rating AS a_rating,
+p.rating AS p_rating,
+SUM(CAST(a.review_count AS int) + p.review_count) AS total_review_counts,
+p.genres,
+a.primary_genre
+FROM app_store_apps AS a
+INNER JOIN play_store_apps AS p
+ON a.name = p.name
+WHERE a.price <= 1 AND a.rating >= 4.5 AND p.rating >= 4.5
+GROUP BY a.review_count, a.rating, p.rating, a.name,  a.primary_genre, p.genres
+ORDER BY total_review_counts;
+
+--Query for count of each distinct genre:
+
+SELECT COUNT(primary_genre),
+primary_genre
+FROM app_store_apps
+GROUP BY primary_genre
+ORDER BY count DESC;
+
+
+
+SELECT 
+subquery.games_total / SUM(COUNT(primary_genre)) OVER() AS games_perc
+FROM
+(SELECT COUNT(primary_genre) AS games_total
+FROM app_store_apps
+HAVING COUNT(primary_genre) > 3000) AS subquery;
+
+
+SELECT primary_genre, count_of_genre
+FROM	(SELECT COUNT(primary_genre) AS count_of_genre,
+			primary_genre
+				FROM app_store_apps
+				GROUP BY app_store_apps.primary_genre) AS sub
+GROUP BY count_of_genre, primary_genre
+ORDER BY count_of_genre DESC;
+
 
 
