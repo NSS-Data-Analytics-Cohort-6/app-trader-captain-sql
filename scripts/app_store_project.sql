@@ -27,7 +27,7 @@
 		  -- Possibly need translations for foreign languages********************
 		  -- Thumbnails/icons removed********************************************
 		  
-		  SELECT DISTINCT name
+		SELECT DISTINCT name
 		FROM play_store_apps;
 		--RESULT(S):
 		  -- 9659 rows returned, so there are some duplicates*********************************
@@ -401,9 +401,98 @@ INNER JOIN app_store_rating as a
 ON a.name = p.name; */
 
 --QUERY TO CLEAN PLAT STORE APPS DATASET
-SELECT name, CAST(price AS money), review_count, COALESCE(rating, 0), genres, category
+
+SELECT DISTINCT name, CAST(price AS money), review_count, COALESCE(rating, 0) AS rating, genres, category
 FROM play_store_apps;
   
   
-SELECT name, CAST(price AS money), review_count, COALESCE(rating, 0), genres, REPLACE(category, '_', ' ') AS category
+SELECT DISTINCT name, CAST(price AS money), review_count, COALESCE(rating, 0) AS rating, genres, REPLACE(category, '_', ' ') AS category
 FROM play_store_apps;
+
+--DETECTING DUPLICATE VALUES IN NAME COLUMN OF PLAY STORE APPS
+	 SELECT name
+	 FROM play_store_apps
+	 GROUP BY name
+	 HAVING COUNT(*)> 1;
+--SHOWS THE NAME THAT IS DUPLICATED AND HOW MANY TIMES IT IS DUPLICATED
+	 SELECT name, COUNT(name)
+	 FROM play_store_apps
+	 GROUP BY name
+	 HAVING COUNT(name)>1
+	 
+--COUNTS HOW MANY ROWS THERE ARE OF DUPLICATED VALUES IN NAME COLUMN OF PLAY STORE APPS
+	 SELECT COUNT(duplicate_count)
+	 FROM 
+	(SELECT name, COUNT(name) AS duplicate_count
+	 FROM play_store_apps
+	 GROUP BY name
+	 HAVING COUNT(name)>1) AS duplicate_values;
+	 
+	 SELECT SUM(duplicate_count)
+	 FROM 
+	(SELECT name, COUNT(name) AS duplicate_count
+	 FROM play_store_apps
+	 GROUP BY name
+	 HAVING COUNT(name)>1) AS duplicate_values;
+	 
+	 SELECT SUM(duplicate_count) - 798
+	 FROM 
+	(SELECT name, COUNT(name) AS duplicate_count
+	 FROM play_store_apps
+	 GROUP BY name
+	 HAVING COUNT(name)>1) AS duplicate_values;
+	 
+	 
+	 SELECT name
+	 FROM play_store_apps
+	 GROUP BY name
+	 HAVING COUNT(name) = 1;
+	 
+	 SELECT name
+	 FROM play_store_apps; --10,840
+	 
+	 SELECT DISTINCT name
+	 FROM play_store_apps; --9659
+	 
+	 SELECT COUNT(name) AS duplicated, COUNT(DISTINCT name) AS singular, COUNT(name) - COUNT(DISTINCT name) AS difference
+	 FROM play_store_apps;
+	 
+--QUERY TO CLEAN PLAY STORE APPS DATASET
+	    SELECT *
+		FROM play_store_apps;
+	 --Gets rid of duplicate names, converts price to money data type and places zeros in null values in rating
+		SELECT
+		DISTINCT name, 
+		CAST(price AS money), 
+		review_count, 
+		COALESCE(rating, 0) AS rating,
+		genres,
+		category
+		FROM play_store_apps;
+  
+  	  --In addition to what the last query does, this changes genres to genre, removes underscores and converts 				uppercase to initial capitalization in category names
+		SELECT
+		DISTINCT name,
+		CAST(price AS money),
+		review_count,
+		COALESCE(rating, 0) AS rating,
+		genres AS genre,
+		INITCAP(REPLACE(category, '_', ' ')) AS category
+		FROM play_store_apps;
+		
+--QUERY TO CLEAN APP STORE APPS DATASET
+		SELECT *
+		FROM app_store_apps;
+      
+	    --Removes duplicate names, converts price to money, casts review count as integer, changes primary genre to genre
+		SELECT
+		DISTINCT name, 
+		CAST(price AS money), 
+		CAST(review_count AS int), 
+		rating,
+		primary_genre AS genre
+		FROM app_store_apps;
+	 
+	
+
+
