@@ -148,3 +148,10 @@ SELECT COUNT(primary_genre) AS count_of_genre,
 GROUP BY primary_genre	
 ORDER BY count_of_genre DESC;
 
+SELECT primary_genre, count_of_genre, count_of_genre/1797*100 AS percentage
+FROM	(SELECT COUNT(primary_genre) AS count_of_genre,
+			primary_genre
+				FROM app_store_apps
+				GROUP BY app_store_apps.primary_genre) AS sub
+GROUP BY count_of_genre, primary_genre
+ORDER BY count_of_genre DESC;
