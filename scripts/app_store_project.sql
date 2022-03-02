@@ -15,35 +15,32 @@
 --  Look into some SELECT queries for 3a
   
  
-  
-  
- 
 --Play Store Test Queries
   --NAME COLUMN
 		SELECT name
 		FROM play_store_apps; 
 		--RESULT(S):
-		  --10,840 Rows Found
-		  -- Possibly need translations for foreign languages********************
-		  -- Thumbnails/icons removed********************************************
+		--10,840 Rows Found
+		--Possibly need translations for foreign languages********************
+		--Thumbnails/icons removed********************************************
 		  
 		SELECT DISTINCT name
 		FROM play_store_apps;
 		--RESULT(S):
-		  -- 9659 rows returned, so there are some duplicates*********************************
+		--9659 rows returned, so there are some duplicates*********************************
 
 		SELECT name
 		FROM play_store_apps
 		WHERE name IS NULL;
 		--RESULT(S):
-		  --Good news! No NULLS
+		--Good news! No NULLS
 
   --CATEGORY COLUMN
   		SELECT DISTINCT category -- Reason for DISTINCT is to shorten the list as much as possible. Duplicates in this case are fine.
 		FROM play_store_apps
 		ORDER BY category; 
 		--RESULT(S):
-  		-- Checked out fine other than underscores - do we want to leave or remove************************
+  		--Checked out fine other than underscores - do we want to leave or remove************************
 
 		SELECT category 
 		FROM play_store_apps
@@ -89,7 +86,7 @@
 		FROM play_store_apps
 		ORDER BY size DESC;
 		--RESULT(S)
-		--My only concern is the last row which bears the text 'Varies with device.' While this row is a text data type, the remaining rows in the                 entire table bear file sizes.*********************************
+		--My only concern is the last row which bears the text 'Varies with device.' While this row is a text data type, the remaining rows in the entire table bear file sizes.*********************************
 
 	  --INSTALL COUNT COLUMN
 		SELECT install_count
@@ -105,7 +102,6 @@
 		--May be fine as is. Show to team to get their opinion
 
 	  --TYPE COLUMN
-
 		SELECT type
 		FROM play_store_apps
 		WHERE type IS NULL;
@@ -120,7 +116,6 @@
 		-- No other issues
 	
      --PRICE COLUMN
-	  
 	    SELECT price
 		FROM play_store_apps
 		WHERE price IS NULL;
@@ -134,7 +129,7 @@
 		--Issue with the amount not sorting correctly, i.e. $154.99 shows up after 15.99 and then 16.99 follows.**************
 		
     --CONTENT RATING COLUMN
-	   SELECT content_rating
+	    SELECT content_rating
 		FROM play_store_apps
 		WHERE content_rating IS NULL;
 		--RESULT(S)
@@ -148,7 +143,7 @@
 		--Run it by team
 		
 	--GENRES COLUMN
-	  SELECT genres
+	    SELECT genres
 		FROM play_store_apps
 		WHERE genres IS NULL;
 		--RESULT(S)
@@ -166,301 +161,259 @@
 		ORDER BY genres;
 		--RESULT(S)
 		--Was just curious - There are 119 diferent genres, many with very similar names*********************
-		
-		
-		
---App Store Test Queries
-  --NAME COLUMN
-   SELECT name
-   FROM app_store_apps;
-   --RESULT(S)
+			
+	--App Store Test Queries
+	  --NAME COLUMN
+	    SELECT name
+	    FROM app_store_apps;
+	    --RESULT(S)
 		--There are 7197 rows
-   SELECT DISTINCT name
-   FROM app_store_apps
-   ORDER BY name;
-   --RESULT(S)
-		--There are 7195 rows, so only 2 duplicates*************
-		--There are many names in foreign languages and names with special characters**************
-   SELECT name
-   FROM app_store_apps
-   WHERE name IS NULL;
-   --RESULT(S)
+			
+	    SELECT DISTINCT name
+	    FROM app_store_apps
+	    ORDER BY name;
+	    --RESULT(S)
+	    --There are 7195 rows, so only 2 duplicates*************
+	    --There are many names in foreign languages and names with special characters**************
+	   
+	    SELECT name
+	    FROM app_store_apps
+	    WHERE name IS NULL;
+	    --RESULT(S)
+	    --No NULLS
+
+	    --SIZE BYTES COLUMN
+        SELECT size_bytes
+	    FROM app_store_apps
+	    WHERE size_bytes IS NULL;
+	    --RESULT(S)
+	    --No NULLS
+
+	    SELECT DISTINCT size_bytes
+	    FROM app_store_apps
+	    ORDER BY size_bytes;
+	    --RESULT(S)
+	    --No issues, the only thing I could think of is spaces on the right side of the bytes amount, but they're on numbers with less digits and I think the values are left aligned. 
+
+	    --CURRENCY COLUMN
+		  SELECT currency
+		  FROM app_store_apps
+		  WHERE currency IS NULL;
+		  --RESULT(S)
+		  --No NULLS
+
+		  SELECT DISTINCT currency
+		  FROM app_store_apps
+		  ORDER BY currency;
+		  --RESULT(S)
+		  --No Issues
+
+		--PRICE COLUMN
+		  SELECT price
+		  FROM app_store_apps
+		  WHERE price IS NULL;
+		--RESULT(S)
 		--No NULLS
-		
-  --SIZE BYTES COLUMN
-  
-  SELECT size_bytes
-  FROM app_store_apps
-  WHERE size_bytes IS NULL;
-  --RESULT(S)
-		--No NULLS
-		
-  SELECT DISTINCT size_bytes
+
+		SELECT DISTINCT price
 		FROM app_store_apps
-		ORDER BY size_bytes;
-        --RESULT(S)
-		--No issues, the only thing I could think of is spaces on the right side of the bytes amount, but they're on numbers with less digits and I               think the values are left aligned. 
-		
-  --CURRENCY COLUMN
-  SELECT currency
-  FROM app_store_apps
-  WHERE currency IS NULL;
-  --RESULT(S)
+		ORDER BY price
+		--RESULT(S)
+		--No Issues	
+
+		--REVIEW COUNT COLUMN
+		SELECT review_count
+		FROM app_store_apps
+		WHERE review_count IS NULL;
+		--RESULT(S)
+			--No NULLS
+   
+		SELECT DISTINCT review_count
+		FROM app_store_apps
+		ORDER BY review_count DESC;
+		--RESULT(S)
+		--Not sorting correctly************	
+
+		--RATING COLUMN
+		SELECT rating
+		FROM app_store_apps
+		WHERE rating IS NULL;
+		--RESULT(S)
 		--No NULLS
 		
-  SELECT DISTINCT currency
+		SELECT DISTINCT rating
 		FROM app_store_apps
-		ORDER BY currency;
-  		--RESULT(S)
+		ORDER BY rating DESC;
+		--RESULT(S)
 		--No Issues
 
-  --PRICE COLUMN
-    SELECT price
-    FROM app_store_apps
-    WHERE price IS NULL;
-	--RESULT(S)
+	   --CONTENT_RATING COLUMN
+		SELECT content_rating
+		FROM app_store_apps
+		WHERE content_rating IS NULL;
+		--RESULT(S)
 		--No NULLS
-		
-	SELECT DISTINCT price
-	FROM app_store_apps
-	ORDER BY price
-  	--RESULT(S)
-	--No Issues	
-	
-  --REVIEW COUNT COLUMN
-    SELECT review_count
-    FROM app_store_apps
-    WHERE review_count IS NULL;
-	--RESULT(S)
-		--No NULLS
+
+		SELECT DISTINCT content_rating
+		FROM app_store_apps
+		ORDER BY content_rating DESC;
+		--RESULT(S)
+		--No Issues
+
+	-- PRIMARY GENRE
+	   SELECT primary_genre
+	   FROM app_store_apps
+	   WHERE primary_genre IS NULL;
+	   --RESULT(S)
+			--No NULLS
+
+	   SELECT DISTINCT primary_genre
+	   FROM app_store_apps
+	   ORDER BY primary_genre DESC;
+	   --RESULT(S)
+		--No Issues
    
-	SELECT DISTINCT review_count
-	FROM app_store_apps
-	ORDER BY review_count DESC;
-  	--RESULT(S)
-	--Not sorting correctly************	
-	
-	--RATING COLUMN
-	SELECT rating
-    FROM app_store_apps
-    WHERE rating IS NULL;
-	--RESULT(S)
-		--No NULLS
-		
-	SELECT DISTINCT rating
-	FROM app_store_apps
-	ORDER BY rating DESC;
-	--RESULT(S)
-	--No Issues
-	
---CONTENT_RATING COLUMN
-  SELECT content_rating
-    FROM app_store_apps
-    WHERE content_rating IS NULL;
-	--RESULT(S)
-		--No NULLS
-		
-    SELECT DISTINCT content_rating
-	FROM app_store_apps
-	ORDER BY content_rating DESC;
-	--RESULT(S)
-	--No Issues
-	
--- PRIMARY GENRE
-   SELECT primary_genre
-   FROM app_store_apps
-   WHERE primary_genre IS NULL;
-   --RESULT(S)
-		--No NULLS
-   
-   SELECT DISTINCT primary_genre
-   FROM app_store_apps
-   ORDER BY primary_genre DESC;
-   --RESULT(S)
-	--No Issues
-   
-	
+		--Queries from Class 	
+		SELECT *
+		FROM app_store_apps AS a
+		INNER JOIN play_store_apps AS p
+		ON a.name = p.name;	
 
-	
---Queries from Class 	
-SELECT *
-FROM app_store_apps AS a
-INNER JOIN play_store_apps AS p
-ON a.name = p.name;	
-	
---Apps that are less than a $1	
-SELECT *
-FROM app_store_apps AS a
-INNER JOIN play_store_apps AS p
-ON a.name = p.name
-where a.price < 1;
+		--Apps that are less than $1 from the play_store	
+		SELECT *
+		FROM app_store_apps AS a
+		INNER JOIN play_store_apps AS p
+		ON a.name = p.name
+		where a.price < 1;
+
+		--Joining of the two tables
+		SELECT *
+		FROM app_store_apps AS a
+		INNER JOIN play_store_apps AS p
+		ON a.name = p.name;
 
 
-SELECT *
-FROM app_store_apps AS a
-INNER JOIN play_store_apps AS p
-ON a.name = p.name;
+		--Combining the ratings for apps from both tables
+		SELECT a.name, 
+		SUM(CAST(p.rating AS float), CAST(a.rating AS float)) AS combined_rating 
+		FROM app_store_apps AS a
+		INNER JOIN play_store_apps AS p
+		ON a.name = p.name
+		WHERE a.price < 1;
 
 
-SELECT *
-FROM app_store_apps AS a
-INNER JOIN play_store_apps AS p
-ON a.name = p.name
-where a.price < 1;
+		SELECT SUM(p.rating + a.rating) AS combined_rating
+		FROM app_store_apps AS a
+		INNER JOIN play_store_apps AS p
+		ON a.name = p.name
+		WHERE a.price < 1
+
+		--TOP 50 Apps with highest review count (app_store)
+		SELECT name, rating, CAST(review_count AS float) 
+		FROM app_store_apps
+		WHERE rating >= 4
+		ORDER BY rating DESC, review_count DESC
+		LIMIT 50;
+
+		--CTE for TOP 50 apps with highest review count (app_store)
+		WITH app_store_rating AS
+		SELECT name, CAST(review_count AS float), rating
+		FROM app_store_apps
+		WHERE rating > 4
+		ORDER BY review_count DESC
+		LIMIT 50;
+
+		--CTE for TOP 50 apps from play store
+		WITH play_store_rating AS 
+		SELECT name, review_count, rating
+		FROM play_store_apps
+		WHERE rating > 4
+		ORDER BY rating DESC, review_count DESC
+		LIMIT 50;
 
 
-SELECT *
-FROM app_store_apps AS a
-INNER JOIN play_store_apps AS p
-ON a.name = p.name
-WHERE a.price < 1;
+		WITH app_store_rating AS
+		SELECT name, CAST(review_count AS float), rating
+		FROM app_store_apps
+		WHERE rating > 4
+		ORDER BY review_count DESC
+		LIMIT 50;
+
+		WITH play_store_rating AS 
+		SELECT name, review_count, rating
+		FROM app_store_apps
+		WHERE rating > 4
+		ORDER BY review_count DESC
+		LIMIT 50;
 
 
---Trying to combine the ratings
-SELECT a.name, 
-SUM(CAST(p.rating AS float), CAST(a.rating AS float)) AS combined_rating 
-FROM app_store_apps AS a
-INNER JOIN play_store_apps AS p
-ON a.name = p.name
-WHERE a.price < 1
+		SELECT name, a.review_count, p.review_count rating, a.rating, p.rating
+		FROM play_store_rating as p
+		INNER JOIN app_store_rating as a
+		ON a.name = p.name; */
+
+		--QUERY TO CLEAN PLAT STORE APPS DATASET
+
+		SELECT DISTINCT name, CAST(price AS money), review_count, COALESCE(rating, 0) AS rating, genres, category
+		FROM play_store_apps;
 
 
-SELECT SUM(p.rating + a.rating) AS combined_rating
-FROM app_store_apps AS a
-INNER JOIN play_store_apps AS p
-ON a.name = p.name
-WHERE a.price < 1
+		SELECT DISTINCT name, CAST(price AS money), review_count, COALESCE(rating, 0) AS rating, genres, REPLACE(category, '_', ' ') AS category
+		FROM play_store_apps;
 
---TOP 10 Apps with highest review count (app_store)
-SELECT name, rating, CAST(review_count AS float) 
-FROM app_store_apps
-WHERE rating >= 4
-ORDER BY rating DESC, review_count DESC
-LIMIT 50;
+	     --DETECTING DUPLICATE VALUES IN NAME COLUMN OF PLAY STORE APPS
+		 SELECT name
+		 FROM play_store_apps
+		 GROUP BY name
+		 HAVING COUNT(*)> 1;
+	     --SHOWS THE NAME THAT IS DUPLICATED AND HOW MANY TIMES IT IS DUPLICATED
+		 SELECT name, COUNT(name)
+		 FROM play_store_apps
+		 GROUP BY name
+		 HAVING COUNT(name)>1
 
-SELECT name, rating, review_count
-FROM app_store_apps
-WHERE rating >= 4
-ORDER BY rating DESC, review_count DESC
-LIMIT 50;
-		
+	     --COUNTS HOW MANY ROWS THERE ARE OF DUPLICATED VALUES IN NAME COLUMN OF PLAY STORE APPS
+		 SELECT COUNT(duplicate_count)
+		 FROM 
+		(SELECT name, COUNT(name) AS duplicate_count
+		 FROM play_store_apps
+		 GROUP BY name
+		 HAVING COUNT(name)>1) AS duplicate_values;
 
-/*WITH app_store_rating AS
-SELECT name, CAST(review_count AS float), rating
-FROM app_store_apps
-WHERE rating > 4
-ORDER BY review_count DESC
-LIMIT 50;
-
-WITH play_store_rating AS 
-SELECT name, review_count, rating
-FROM app_store_apps
-WHERE rating > 4
-ORDER BY rating DESC, review_count DESC
-LIMIT 50;
-
-
-SELECT * 
-FROM play_store_rating
-INNER JOIN app_store_rating
-USING name;*/
-
-/*WITH app_store_rating AS
-SELECT name, CAST(review_count AS float), rating
-FROM app_store_apps
-WHERE rating > 4
-ORDER BY review_count DESC
-LIMIT 50;
-
-WITH play_store_rating AS 
-SELECT name, review_count, rating
-FROM app_store_apps
-WHERE rating > 4
-ORDER BY rating DESC, review_count DESC
-LIMIT 50;
-
-
-WITH app_store_rating AS
-SELECT name, CAST(review_count AS float), rating
-FROM app_store_apps
-WHERE rating > 4
-ORDER BY review_count DESC
-LIMIT 50;
-
-WITH play_store_rating AS 
-SELECT name, review_count, rating
-FROM app_store_apps
-WHERE rating > 4
-ORDER BY review_count DESC
-LIMIT 50;
-
-
-SELECT name, a.review_count, p.review_count rating, a.rating, p.rating
-FROM play_store_rating as p
-INNER JOIN app_store_rating as a
-ON a.name = p.name; */
-
---QUERY TO CLEAN PLAT STORE APPS DATASET
-
-SELECT DISTINCT name, CAST(price AS money), review_count, COALESCE(rating, 0) AS rating, genres, category
-FROM play_store_apps;
-  
-  
-SELECT DISTINCT name, CAST(price AS money), review_count, COALESCE(rating, 0) AS rating, genres, REPLACE(category, '_', ' ') AS category
-FROM play_store_apps;
-
---DETECTING DUPLICATE VALUES IN NAME COLUMN OF PLAY STORE APPS
-	 SELECT name
-	 FROM play_store_apps
-	 GROUP BY name
-	 HAVING COUNT(*)> 1;
---SHOWS THE NAME THAT IS DUPLICATED AND HOW MANY TIMES IT IS DUPLICATED
-	 SELECT name, COUNT(name)
-	 FROM play_store_apps
-	 GROUP BY name
-	 HAVING COUNT(name)>1
+		 SELECT SUM(duplicate_count)
+		 FROM 
+		(SELECT name, COUNT(name) AS duplicate_count
+		 FROM play_store_apps
+		 GROUP BY name
+		 HAVING COUNT(name)>1) AS duplicate_values;
 	 
---COUNTS HOW MANY ROWS THERE ARE OF DUPLICATED VALUES IN NAME COLUMN OF PLAY STORE APPS
-	 SELECT COUNT(duplicate_count)
-	 FROM 
-	(SELECT name, COUNT(name) AS duplicate_count
-	 FROM play_store_apps
-	 GROUP BY name
-	 HAVING COUNT(name)>1) AS duplicate_values;
-	 
-	 SELECT SUM(duplicate_count)
-	 FROM 
-	(SELECT name, COUNT(name) AS duplicate_count
-	 FROM play_store_apps
-	 GROUP BY name
-	 HAVING COUNT(name)>1) AS duplicate_values;
-	 
-	 SELECT SUM(duplicate_count) - 798
-	 FROM 
-	(SELECT name, COUNT(name) AS duplicate_count
-	 FROM play_store_apps
-	 GROUP BY name
-	 HAVING COUNT(name)>1) AS duplicate_values;
-	 
-	 
-	 SELECT name
-	 FROM play_store_apps
-	 GROUP BY name
-	 HAVING COUNT(name) = 1;
-	 
-	 SELECT name
-	 FROM play_store_apps; --10,840
-	 
-	 SELECT DISTINCT name
-	 FROM play_store_apps; --9659
-	 
-	 SELECT COUNT(name) AS duplicated, COUNT(DISTINCT name) AS singular, COUNT(name) - COUNT(DISTINCT name) AS difference
-	 FROM play_store_apps;
-	 
---QUERY TO CLEAN PLAY STORE APPS DATASET
+		 SELECT SUM(duplicate_count) - 798
+		 FROM 
+		(SELECT name, COUNT(name) AS duplicate_count
+		 FROM play_store_apps
+		 GROUP BY name
+		 HAVING COUNT(name)>1) AS duplicate_values;
+
+
+		 SELECT name
+		 FROM play_store_apps
+		 GROUP BY name
+		 HAVING COUNT(name) = 1;
+
+		 SELECT name
+		 FROM play_store_apps; --10,840
+
+		 SELECT DISTINCT name
+		 FROM play_store_apps; --9659
+
+		 SELECT COUNT(name) AS duplicated, COUNT(DISTINCT name) AS singular, COUNT(name) - COUNT(DISTINCT name) AS difference
+		 FROM play_store_apps;
+
+        --QUERY TO CLEAN PLAY STORE APPS DATASET
 	    SELECT *
 		FROM play_store_apps;
-	 --Gets rid of duplicate names, converts price to money data type and places zeros in null values in rating
+		
+	    --Gets rid of duplicate names, converts price to money data type and places zeros in null values in rating
 		SELECT
 		DISTINCT name, 
 		CAST(price AS money), 
@@ -470,7 +423,7 @@ FROM play_store_apps;
 		category
 		FROM play_store_apps;
   
-  	  --In addition to what the last query does, this changes genres to genre, removes underscores and converts 				uppercase to initial capitalization in category names
+  	    --In addition to what the last query does, this changes genres to genre, removes underscores and converts uppercase to initial capitalization in category names
 		SELECT
 		DISTINCT name,
 		CAST(price AS money),
@@ -480,7 +433,7 @@ FROM play_store_apps;
 		INITCAP(REPLACE(category, '_', ' ')) AS category
 		FROM play_store_apps;
 		
---QUERY TO CLEAN APP STORE APPS DATASET
+        --QUERY TO CLEAN APP STORE APPS DATASET
 		SELECT *
 		FROM app_store_apps;
       
@@ -493,114 +446,111 @@ FROM play_store_apps;
 		primary_genre AS genre
 		FROM app_store_apps;
 	 
-	 SELECT * FROM play_store_apps;
-	 SELECT * FROM app_store_apps;
+		SELECT * FROM play_store_apps;
+		SELECT * FROM app_store_apps;
+
+
+
+		--Querys for cleaning up dataset and comparing rating and review count (only $1 or less apps):	 
+		SELECT DISTINCT p.name,
+		CAST(a.review_count AS int) AS a_review_count,
+		p.review_count AS p_review_count,
+		a.rating AS a_rating,
+		p.rating AS p_rating,
+		SUM(CAST(a.review_count AS int) + p.review_count) AS total_review_counts
+		FROM play_store_apps AS p
+		INNER JOIN app_store_apps AS a
+		ON a.name = p.name
+		WHERE a.price <= 1 AND a.rating >= 4.5 AND p.rating >= 4.5
+		GROUP BY a.review_count, p.review_count, a.rating, p.rating, p.name
+		ORDER BY total_review_counts DESC
+		LIMIT 50;
+
+
+		SELECT DISTINCT TRIM(a.name),
+		CAST(a.review_count AS int) AS a_review_count,
+		MAX(p.review_count) AS p_review_count,
+		a.rating AS a_rating,
+		p.rating AS p_rating,
+		SUM(CAST(a.review_count AS int) + p.review_count) AS total_review_counts
+		FROM app_store_apps AS a
+		INNER JOIN play_store_apps AS p
+		ON a.name = p.name
+		WHERE a.price <= 1 AND a.rating >= 4.5 AND p.rating >= 4.5
+		GROUP BY a.review_count, a.rating, p.rating, a.name
+		ORDER BY total_review_counts DESC
+		LIMIT 50;
 	 
 
-
---Query for comparing rating and review count (only $1 or less apps):	 
-SELECT DISTINCT p.name,
-CAST(a.review_count AS int) AS a_review_count,
-p.review_count AS p_review_count,
-a.rating AS a_rating,
-p.rating AS p_rating,
-SUM(CAST(a.review_count AS int) + p.review_count) AS total_review_counts
-FROM play_store_apps AS p
-INNER JOIN app_store_apps AS a
-ON a.name = p.name
-WHERE a.price <= 1 AND a.rating >= 4.5 AND p.rating >= 4.5
-GROUP BY a.review_count, p.review_count, a.rating, p.rating, p.name
-ORDER BY total_review_counts DESC
-LIMIT 50;
-
-
-SELECT DISTINCT TRIM(a.name),
-CAST(a.review_count AS int) AS a_review_count,
-MAX(p.review_count) AS p_review_count,
-a.rating AS a_rating,
-p.rating AS p_rating,
-SUM(CAST(a.review_count AS int) + p.review_count) AS total_review_counts
-FROM app_store_apps AS a
-INNER JOIN play_store_apps AS p
-ON a.name = p.name
-WHERE a.price <= 1 AND a.rating >= 4.5 AND p.rating >= 4.5
-GROUP BY a.review_count, a.rating, p.rating, a.name
-ORDER BY total_review_counts DESC
-LIMIT 50;
-	 
-SELECT DISTINCT TRIM(a.name),
-CAST(a.review_count AS int) AS a_review_count,
-MAX(p.review_count) AS p_review_count,
-a.rating AS a_rating,
-p.rating AS p_rating,
-SUM(CAST(a.review_count AS int) + p.review_count) AS total_review_counts,
-p.genres,
-a.primary_genre,
-INITCAP(REPLACE(p.category, '_', ' ')) AS category
-FROM app_store_apps AS a
-INNER JOIN play_store_apps AS p
-ON a.name = p.name
-WHERE a.price <= 1 AND a.rating >= 4.5 AND p.rating >= 4.5
-GROUP BY a.review_count, a.rating, p.rating, a.name,  a.primary_genre, p.genres, p.category
-ORDER BY total_review_counts DESC;
+		SELECT DISTINCT TRIM(a.name),
+		CAST(a.review_count AS int) AS a_review_count,
+		MAX(p.review_count) AS p_review_count,
+		a.rating AS a_rating,
+		p.rating AS p_rating,
+		SUM(CAST(a.review_count AS int) + p.review_count) AS total_review_counts,
+		p.genres,
+		a.primary_genre,
+		INITCAP(REPLACE(p.category, '_', ' ')) AS category
+		FROM app_store_apps AS a
+		INNER JOIN play_store_apps AS p
+		ON a.name = p.name
+		WHERE a.price <= 1 AND a.rating >= 4.5 AND p.rating >= 4.5
+		GROUP BY a.review_count, a.rating, p.rating, a.name,  a.primary_genre, p.genres, p.category
+		ORDER BY total_review_counts DESC;
 
 
 
-SELECT DISTINCT TRIM(a.name),
-CAST(a.review_count AS int) AS a_review_count,
-MAX(p.review_count) AS p_review_count,
-a.rating AS a_rating,
-p.rating AS p_rating,
-SUM(CAST(a.review_count AS int) + p.review_count) AS total_review_counts,
-p.genres,
-a.primary_genre
-FROM app_store_apps AS a
-INNER JOIN play_store_apps AS p
-ON a.name = p.name
-WHERE a.price <= 1 AND a.rating >= 4.5 AND p.rating >= 4.5
-GROUP BY a.review_count, a.rating, p.rating, a.name,  a.primary_genre, p.genres
-ORDER BY total_review_counts DESC;
-
-SELECT DISTINCT a.name,
-CAST(a.review_count AS int) AS a_review_count,
-MAX(p.review_count) AS p_review_count,
-a.rating AS a_rating,
-p.rating AS p_rating,
-SUM(CAST(a.review_count AS int) + p.review_count) AS total_review_counts,
-p.genres,
-a.primary_genre
-FROM app_store_apps AS a
-INNER JOIN play_store_apps AS p
-ON a.name = p.name
-WHERE a.price <= 1 AND a.rating >= 4.5 AND p.rating >= 4.5
-GROUP BY a.review_count, a.rating, p.rating, a.name,  a.primary_genre, p.genres
-ORDER BY total_review_counts;
-
---Query for count of each distinct genre:
-
-SELECT COUNT(primary_genre),
-primary_genre
-FROM app_store_apps
-GROUP BY primary_genre
-ORDER BY count DESC;
+		SELECT DISTINCT TRIM(a.name),
+		CAST(a.review_count AS int) AS a_review_count,
+		MAX(p.review_count) AS p_review_count,
+		a.rating AS a_rating,
+		p.rating AS p_rating,
+		SUM(CAST(a.review_count AS int) + p.review_count) AS total_review_counts,
+		p.genres,
+		a.primary_genre
+		FROM app_store_apps AS a
+		INNER JOIN play_store_apps AS p
+		ON a.name = p.name
+		WHERE a.price <= 1 AND a.rating >= 4.5 AND p.rating >= 4.5
+		GROUP BY a.review_count, a.rating, p.rating, a.name,  a.primary_genre, p.genres
+		ORDER BY total_review_counts DESC;
 
 
+		SELECT DISTINCT a.name, 
+		CAST(a.review_count AS int) AS a_review_count, 
+		MAX(p.review_count) AS p_review_count,
+		a.rating AS a_rating,
+		p.rating AS p_rating,
+		SUM(CAST(a.review_count AS int) + p.review_count) AS total_review_counts,
+		p.genres,
+		a.primary_genre, a.content_rating
+		FROM app_store_apps AS a
+		INNER JOIN play_store_apps AS p
+		ON a.name = p.name
+		WHERE a.price <= 1 AND a.rating >= 4.0 AND p.rating >= 4.0
+		GROUP BY a.review_count, a.rating, p.rating, a.name,  a.primary_genre, p.genres, a.content_rating
+		ORDER BY total_review_counts DESC
+		LIMIT 20;
 
-SELECT 
-subquery.games_total / SUM(COUNT(primary_genre)) OVER() AS games_perc
-FROM
-(SELECT COUNT(primary_genre) AS games_total
-FROM app_store_apps
-HAVING COUNT(primary_genre) > 3000) AS subquery;
+		--Query for count of each genre:
+		SELECT COUNT(primary_genre),
+		primary_genre
+		FROM app_store_apps
+		GROUP BY primary_genre
+		ORDER BY count DESC;
+
+		--Top 10 apps based on count of genre
+		SELECT primary_genre, count_of_genre
+		FROM	(SELECT COUNT(primary_genre) AS count_of_genre,
+					primary_genre
+						FROM app_store_apps
+						GROUP BY app_store_apps.primary_genre) AS sub
+		GROUP BY count_of_genre, primary_genre
+		ORDER BY count_of_genre DESC
+		LIMIT 10;
 
 
-SELECT primary_genre, count_of_genre
-FROM	(SELECT COUNT(primary_genre) AS count_of_genre,
-			primary_genre
-				FROM app_store_apps
-				GROUP BY app_store_apps.primary_genre) AS sub
-GROUP BY count_of_genre, primary_genre
-ORDER BY count_of_genre DESC;
+
 
 
 
